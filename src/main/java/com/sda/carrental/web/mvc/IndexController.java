@@ -3,6 +3,8 @@ package com.sda.carrental.web.mvc;
 
 import com.sda.carrental.service.DepartmentService;
 import com.sda.carrental.web.mvc.form.CreateIndexForm;
+
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,8 +34,8 @@ public class IndexController {
 
     @PostMapping
     public String handleRequest(@ModelAttribute("createIndexForm") @Valid CreateIndexForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
-        if(errors.hasErrors() || form.getDateFrom().isAfter(form.getDateTo())) {
-            if(form.getDateFrom().isAfter(form.getDateTo())) map.addAttribute("message", "Nieprawidłowa data!");
+        if(errors.hasErrors()) {
+        //    if(form.getDateFrom().isAfter(form.getDateTo()) || errors.hasFieldErrors("dateFrom")) map.addAttribute("message", "Nieprawidłowa data!");
             if(form.isFirstBranchChecked()) form.setFirstBranchChecked(false);
 
             map.addAttribute("createIndexForm", form);
@@ -41,7 +43,7 @@ public class IndexController {
             return "index";
         }
 
-        if(!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
+      //  if(!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
         form.setDateCreated(LocalDate.now());
         /*System.out.println(form.isFirstBranchChecked() + " " + form.getBranch_id_from() + " do " + form.getBranch_id_to());*/
 
